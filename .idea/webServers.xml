@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b4f7a894-a07d-4052-bee3-c126b61173c7" name="remote_chocolate_ecommerce" url="http://itcord.com/laravel.ecommerce">
+        <fileTransfer host="itcord.com" port="21" rootFolder="/public_html/laravel.ecommerce">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
