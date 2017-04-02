@@ -6,7 +6,7 @@
         <div class="panel-heading" role="tab" id="headingThree" style="padding:0px">
             <h4>
 
-                Shipping Information
+                Billing Information
 
             </h4>
 
@@ -16,7 +16,7 @@
                 @include('front.ecommerce.checkout.pages.success_message')
                 @include('front.ecommerce.checkout.pages.error_message')
 
-                {!!Form::open( array('route' =>['customer.shippinginfo.save'],'method'=>'post'))!!}
+                {!!Form::open( array('route' =>['customer.billinginfo.save'],'method'=>'post'))!!}
 
 
                 <div class="row">
@@ -153,7 +153,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-large">Save </button>
+                            <button type="submit" class="btn btn-info btn-large">Save</button>
                         </div>
                     </div>
 

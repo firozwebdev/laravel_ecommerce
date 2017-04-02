@@ -10,6 +10,18 @@
             </div>
             <div>
                 <div class="panel-body">
+                    @include('front.ecommerce.checkout.pages.success_message')
+                    @include('front.ecommerce.checkout.pages.error_message')
+                    @if($no_data)
+
+                        <div class="panel panel-success">
+                            <div class="panel-heading">For your kind informations</div>
+                            <div class="panel-body"> {{ $no_data }}... Please provide <span class="pull-right"><a href="{{ route('customer.provide.billing.info') }}" class="btn btn-xs btn-info">Billing info</a></span></div>
+
+                            <!-- Add Panel Footer Here -->
+                        </div>
+
+                    @else
                     {!!Form::open( array('route' =>['customer.billinginfo.update'],'method'=>'put'))!!}
 
 
@@ -159,6 +171,7 @@
 
                     </div>
                     {!!Form::close()!!}
+                    @endif
                 </div>
             </div>
         </div>

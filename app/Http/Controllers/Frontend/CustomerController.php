@@ -67,7 +67,8 @@ class CustomerController extends Controller
     }
 
     public function customer_billing_address(){
-        if(Session::has('customer_id')){
+
+      /*  if(Session::has('customer_id')){
             $customer_id = Session::get('customer_id');
 
             $billing= Billing::where('customer_id',$customer_id)->first();
@@ -79,8 +80,104 @@ class CustomerController extends Controller
             'billing'=>$billing,
             'countries'=>$countries,
             'provinces'=>$provinces
-        ]);
+        ]); */
+
+
+
+        if(Session::has('customer_id')){
+            if(Session::has('billing_id')){
+
+                $customer_id = Session::get('customer_id');
+
+                $billing = Billing::where('customer_id',$customer_id)->first();
+
+                $countries = Country::all();
+                $provinces = Province::all();
+                return view('front.ecommerce.customer.pages.billing_address')->with([
+
+                    'billing'=>$billing,
+                    'countries'=>$countries,
+                    'provinces'=>$provinces,
+                    'no_data' =>''
+                ]);
+            }else{
+
+
+                $no_data = 'Sorry you did not set Billing Informations !!';
+                return view('front.ecommerce.customer.pages.billing_address')->with('no_data',$no_data);
+            }
+        }else{
+            return redirect()->route('customer.login');
+        }
+
+
+
+
+
     }
+
+
+    public function customer_billing_info_save(Request $request){
+
+
+        if(Session::has('customer_id')){
+            $messages = array(
+
+                'company_name.required' => 'Company Name should not be empty...',
+                'company_name.min' => 'Company Name should not be minimum 3 characters...',
+                'address.required' => 'Address should not be empty...',
+                'city.required' => 'City should not be empty...',
+                'country.required' => 'Country should not be empty...',
+                'street_address.required' => 'Street Address should not be empty...',
+                'zip.required' => 'Zip code should not be empty...',
+
+
+            );
+            $rules = array(
+                'company_name' => 'required|min:5',
+                'address' => 'required',
+                'city' => 'required',
+                'country' => 'required',
+                'mobile' => 'required',
+                'street_address' => 'required',
+                'zip' => 'required',
+            );
+
+            $validator = Validator::make($request->all(), $rules, $messages);
+            $country = Country::where('country_code',$request->country)
+                ->first();
+
+            if ($validator->fails()) {
+                return redirect()->back()->withInput()->withErrors($validator);
+            }else{
+
+
+                $billing_data = Billing::create([
+                    'customer_id' => Session::get('customer_id'),
+                    'company_name' => $request->company_name,
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'country' => $country->country,
+                    'mobile' => $request->mobile,
+                    'street_address' => $request->street_address,
+                    'zip' => $request->zip,
+                ]);
+
+                if($billing_data){
+                    Session::put('billing_id',$billing_data->id);
+                    Session::flash('message','Billing informations is saved Successfully !!');
+                    return redirect()->route('customer.billing.address');
+                }else{
+                    Session::flash('error','Billing informations is not saved Successfully !!');
+                    return back();
+                }
+            }
+        }else{
+            return redirect()->route('customer.login');
+        }
+    }
+
+
 
     public function customer_billing_info_update(Request $request){
 
@@ -171,6 +268,21 @@ class CustomerController extends Controller
     }
 
 
+    public function customer_provide_billing_info(){
+
+        if(Session::has('customer_id')){
+            $countries = Country::all();
+            $provinces = Province::all();
+
+            return view('front.ecommerce.customer.pages.provide_billing_data')->with([
+                'countries'=>$countries,
+                'provinces'=>$provinces,
+            ]);
+        }else{
+            return redirect()->route('customer.login');
+        }
+
+    }
     public function customer_provide_shipping_info(){
 
         if(Session::has('customer_id')){

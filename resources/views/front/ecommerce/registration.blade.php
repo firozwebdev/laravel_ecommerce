@@ -8,13 +8,23 @@
                 <div class="row">
                     <div class="col-md-offset-3 col-md-6">
                         <div class="heading-row">
-                            <h1>Already Registered?</h1>
-                            <p>If you have an account with us, please log in.</p>
+                            <h1>Customer Registration</h1>
+                            <p>Please, Give the proper Infomation below ....</p>
                         </div>
 
                         @include('front.ecommerce.checkout.pages.error_message')
-                        {!!Form::open( array('route' =>['customer.login.check'],'method'=>'post'))!!}
+                        {!!Form::open( array('route' =>['customer.registration.check'],'method'=>'post'))!!}
                         <div class="form-content">
+                            <div class="form-group">
+                                {{Form::label('first_name', 'First Name', array('class' => ''))}}
+                                {{Form::text('first_name', $first_name = null, array('class' => 'form-control','id'=>'first_name' ))}}
+                                @if ($errors->has('first_name')) <p class="text-danger">{{ $errors->first('first_name') }}</p> @endif
+                            </div>
+                            <div class="form-group">
+                                {{Form::label('last_name', 'Last Name', array('class' => ''))}}
+                                {{Form::text('last_name', $last_name = null, array('class' => 'form-control','id'=>'last_name' ))}}
+                                @if ($errors->has('last_name')) <p class="text-danger">{{ $errors->first('last_name') }}</p> @endif
+                            </div>
                             <div class="form-group">
                                 {{Form::label('email_address', 'Email Address', array('class' => ''))}}
                                 {{Form::text('email_address', $email_address = null, array('class' => 'form-control','id'=>'email_address' ))}}
@@ -33,16 +43,12 @@
                                 </label>
                             </div>
                             <div class="form-group btn-area">
-                                <button type="submit" class="btn btn-info btn-large">Sign In</button>
-                                <a href="login.html#" class="btn-link">Forgot Your Password?</a>
+                                <button type="submit" class="btn btn-info btn-large">Submit</button>
+
                             </div>
                         </div>
                         {!!Form::close()!!}
-                        <div class="heading-row">
-                            <h1>New Here?</h1>
-                            <p>Registration is free and easy!</p>
-                            <a href="{{ route('customer.registration') }}" class="btn btn-detail btn-large">Create an Account</a>
-                        </div>
+
                     </div>
                 </div>
             </div>

@@ -891,31 +891,44 @@
 
         var token = '{{ csrf_token() }}';
         var process = " {{ route('select.province.by.country') }} ";
+        //var country_code = $('.select_country').val();
+
         var country_code = $('.select_country').val();
 
+        console.log(country_code);
 
         var customer_id = "<?php if(Session::has('customer_id')) { echo Session::get('customer_id');}else{ return null; } ?>";
 
         //console.log(customer_id);
 
         if(country_code && customer_id) {
+
             var data = {
                 "_token":token,
                 "country_code":country_code,
                 "customer_id":customer_id
             }
             $.post(process, data, function(result){
-                console.log(result);
+                //console.log(result);
                 var data = '';
                 $.each(result.province, function(i, val) {
-                    if(result.province_from_billing_address.city===val.province_name){
-                        data += '<option selected>'+ val.province_name +'</option>';
+
+                    if(result.province_from_billing_address){
+                        if(result.province_from_billing_address.city === val.province_name){
+                            data += '<option selected>'+ val.province_name +'</option>';
+                        }
+
                     }
-                    if(result.province_from_shipping_address.city===val.province_name){
-                        data += '<option selected>'+ val.province_name +'</option>';
+                    if(result.province_from_shipping_address){
+                        if(result.province_from_shipping_address.city===val.province_name){
+                            data += '<option selected>'+ val.province_name +'</option>';
+                        }
                     }
-                    data += '<option>'+ val.province_name +'</option>';
+
+
+
                 });
+                //console.log(data);
                 $('.select_province').html(data);
             });
         }

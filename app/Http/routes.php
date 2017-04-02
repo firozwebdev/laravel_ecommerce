@@ -40,10 +40,22 @@ Route::get('/customer-login',[
     'uses'=>'Frontend\LoginController@customer_login',
     'as'=>'customer.login'
 ]);
+
+Route::get('/customer-registration',[
+    'uses'=>'Frontend\LoginController@customer_registration',
+    'as'=>'customer.registration'
+]);
+
+Route::post('/customer-registration-check',[
+    'uses'=>'Frontend\LoginController@customer_registration_check',
+    'as'=>'customer.registration.check'
+]);
+
 Route::post('/customer-login-check',[
     'uses'=>'Frontend\LoginController@customer_login_check',
     'as'=>'customer.login.check'
 ]);
+
 Route::get('/product-detail/{id}',[
     'uses' => 'Frontend\EcommerceController@product_detail',
     'as' => 'ecommerce.product.detail'
@@ -264,11 +276,19 @@ Route::put('/customer-billing-info-update',[
     'as' =>'customer.billinginfo.update'
 ]);
 
+Route::get('/provide-billing-info',[
+    'uses'=>'Frontend\CustomerController@customer_provide_billing_info',
+    'as' =>'customer.provide.billing.info'
+]);
 Route::get('/provide-shipping-info',[
     'uses'=>'Frontend\CustomerController@customer_provide_shipping_info',
     'as' =>'customer.provide.shipping.info'
 ]);
 
+Route::post('/customer-billing-info-save',[
+    'uses'=>'Frontend\CustomerController@customer_billing_info_save',
+    'as' =>'customer.billinginfo.save'
+]);
 Route::post('/customer-shipping-info-save',[
     'uses'=>'Frontend\CustomerController@customer_shipping_info_save',
     'as' =>'customer.shippinginfo.save'
