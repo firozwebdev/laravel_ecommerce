@@ -76,7 +76,7 @@
                 @endforeach
                     @else
 
-                    <h3>Sorry, You did not place anyproduct in wishlist !!</h3>
+                    <h3>Sorry, You did not place any product in wishlist !!</h3>
                 @endif
             </div>
         </div>
